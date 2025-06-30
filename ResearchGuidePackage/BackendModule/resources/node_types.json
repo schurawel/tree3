@@ -1,0 +1,345 @@
+{
+  "_metadata": {
+    "description": "Configuration file for node types in ResearchGuide",
+    "version": "1.0",
+    "available_ui_elements": {
+      "text": "Single line text input (rendered as QLineEdit)",
+      "textarea": "Multi-line text input (rendered as QTextEdit)",
+      "dropdown": "Dropdown selector (rendered as QComboBox, requires 'options' array)",
+      "file_upload": "File upload button (rendered as QPushButton for file selection)",
+      "date_picker": "Date selection widget (rendered as QDateEdit)",
+      "tags": "Input for comma-separated tags (rendered as enhanced QLineEdit)",
+      "email": "Email input field (rendered as QLineEdit with validation)",
+      "slider": "Numeric slider (rendered as QSlider, requires 'min_value' and 'max_value')",
+      "checkbox": "Boolean checkbox (rendered as QCheckBox)"
+    },
+    "available_types": {
+      "string": "Text value (default)",
+      "text": "Longer text value",
+      "int": "Integer value",
+      "float": "Floating point value",
+      "bool": "Boolean value",
+      "date": "Date value",
+      "file": "File reference"
+    }
+  },
+  "document": {
+    "name": "Document",
+    "description": "A document node representing a file",
+    "color": "lightblue",
+    "icon": "document-icon",
+    "default_size": 25,
+    "parameters": [
+      {
+        "name": "name",
+        "type": "string",
+        "display_name": "Name",
+        "description": "Document name",
+        "required": true,
+        "ui_element": "text",
+        "default_value": "New Document"
+      },
+      {
+        "name": "content",
+        "type": "text",
+        "display_name": "Content",
+        "description": "Document content",
+        "ui_element": "textarea",
+        "default_value": ""
+      },
+      {
+        "name": "file_path",
+        "type": "file",
+        "display_name": "File",
+        "ui_element": "file_upload",
+        "default_value": ""
+      },
+      {
+        "name": "tags",
+        "type": "string",
+        "display_name": "Tags",
+        "description": "Comma-separated tags",
+        "ui_element": "tags",
+        "default_value": ""
+      },
+      {
+        "name": "date_created",
+        "type": "date",
+        "display_name": "Date Created",
+        "ui_element": "date_picker",
+        "default_value": ""
+      },
+      {
+        "name": "namespaces",
+        "type": "list",
+        "display_name": "Namespaces",
+        "description": "List of namespaces",
+        "ui_element": "tags",
+        "default_value": []
+      }
+    ]
+  },
+  "person": {
+    "name": "Person",
+    "description": "A node representing a person",
+    "color": "lightgreen",
+    "icon": "person-icon",
+    "default_size": 30,
+    "parameters": [
+      {
+        "name": "name",
+        "type": "string",
+        "display_name": "Name",
+        "required": true,
+        "ui_element": "text",
+        "default_value": "New Person"
+      },
+      {
+        "name": "role",
+        "type": "string",
+        "display_name": "Role",
+        "ui_element": "dropdown",
+        "options": ["Researcher", "Collaborator", "Supervisor", "Student", "Other"],
+        "default_value": "Researcher"
+      },
+      {
+        "name": "email",
+        "type": "string",
+        "display_name": "Email",
+        "ui_element": "email",
+        "default_value": ""
+      },
+      {
+        "name": "organization",
+        "type": "string",
+        "display_name": "Organization",
+        "ui_element": "text",
+        "default_value": ""
+      },
+      {
+        "name": "namespaces",
+        "type": "list",
+        "display_name": "Namespaces",
+        "description": "List of namespaces",
+        "ui_element": "tags",
+        "default_value": []
+      }
+    ]
+  },
+  "concept": {
+    "name": "Concept",
+    "description": "A node representing a concept or idea",
+    "color": "lightyellow",
+    "icon": "concept-icon",
+    "default_size": 20,
+    "parameters": [
+      {
+        "name": "name",
+        "type": "string",
+        "display_name": "Name",
+        "required": true,
+        "ui_element": "text",
+        "default_value": "New Concept"
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "display_name": "Description",
+        "ui_element": "textarea",
+        "default_value": ""
+      },
+      {
+        "name": "category",
+        "type": "string",
+        "display_name": "Category",
+        "ui_element": "dropdown",
+        "options": ["Theory", "Method", "Framework", "Finding", "Other"],
+        "default_value": "Theory"
+      },
+      {
+        "name": "namespaces",
+        "type": "list",
+        "display_name": "Namespaces",
+        "description": "List of namespaces",
+        "ui_element": "tags",
+        "default_value": []
+      }
+    ]
+  },
+  "task": {
+    "name": "Task",
+    "description": "A task or todo item",
+    "color": "salmon",
+    "icon": "task-icon",
+    "default_size": 22,
+    "parameters": [
+      {
+        "name": "name",
+        "type": "string",
+        "display_name": "Name",
+        "required": true,
+        "ui_element": "text",
+        "default_value": "New Task"
+      },
+      {
+        "name": "status",
+        "type": "string",
+        "display_name": "Status",
+        "options": ["Not Started", "In Progress", "Completed"],
+        "ui_element": "dropdown",
+        "default_value": "Not Started"
+      },
+      {
+        "name": "due_date",
+        "type": "date",
+        "display_name": "Due Date",
+        "ui_element": "date_picker",
+        "default_value": ""
+      },
+      {
+        "name": "priority",
+        "type": "int",
+        "display_name": "Priority",
+        "min_value": 1,
+        "max_value": 5,
+        "ui_element": "slider",
+        "default_value": 3
+      },
+      {
+        "name": "namespaces",
+        "type": "list",
+        "display_name": "Namespaces",
+        "description": "List of namespaces",
+        "ui_element": "tags",
+        "default_value": []
+      }
+    ]
+  },
+  "page": {
+    "name": "Page",
+    "description": "A node representing an abstraction page. text_block or file nodes can be attached to it",
+    "color": "#4BA3C3",
+    "icon": "page-icon",
+    "default_size": 35,
+    "parameters": [
+      {
+        "name": "title",
+        "type": "string",
+        "display_name": "Title",
+        "description": "Page title",
+        "required": true,
+        "ui_element": "text",
+        "default_value": "New Page"
+      },
+      {
+        "name": "tags",
+        "type": "string",
+        "display_name": "Tags",
+        "description": "Comma-separated tags",
+        "ui_element": "tags",
+        "default_value": ""
+      },
+      {
+        "name": "namespaces",
+        "type": "list",
+        "display_name": "Namespaces",
+        "description": "List of namespaces",
+        "ui_element": "tags",
+        "default_value": []
+      }
+    ]
+  },
+  "file": {
+    "name": "File",
+    "description": "A node representing a file stored in the database",
+    "color": "#CE8147",
+    "icon": "file-icon",
+    "default_size": 25,
+    "parameters": [
+      {
+        "name": "name",
+        "type": "string",
+        "display_name": "Name",
+        "description": "File name",
+        "required": true,
+        "ui_element": "text",
+        "default_value": "New File"
+      },
+      {
+        "name": "file_path",
+        "type": "file",
+        "display_name": "File",
+        "ui_element": "file_upload",
+        "required": true,
+        "default_value": ""
+      },
+      {
+        "name": "file_type",
+        "type": "string",
+        "display_name": "File Type",
+        "description": "Type of file",
+        "ui_element": "text",
+        "default_value": ""
+      },
+      {
+        "name": "last_modified",
+        "type": "date",
+        "display_name": "Last Modified",
+        "ui_element": "date_picker",
+        "default_value": ""
+      },
+      {
+        "name": "namespaces",
+        "type": "list",
+        "display_name": "Namespaces",
+        "description": "List of namespaces",
+        "ui_element": "tags",
+        "default_value": []
+      }
+    ]
+  },
+  "text_block": {
+    "name": "Text Block",
+    "description": "A node representing a block of text (rendered as a bullet point)",
+    "color": "#95D9C3",
+    "icon": "text-block-icon",
+    "default_size": 20,
+    "parameters": [
+      {
+        "name": "content",
+        "type": "text",
+        "display_name": "Content",
+        "description": "Text content",
+        "required": true,
+        "ui_element": "textarea",
+        "default_value": ""
+      },
+      {
+        "name": "level",
+        "type": "int",
+        "display_name": "Indent Level",
+        "description": "Indentation level (for bullet points)",
+        "ui_element": "slider",
+        "min_value": 0,
+        "max_value": 10,
+        "default_value": 0
+      },
+      {
+        "name": "type",
+        "type": "string",
+        "display_name": "Block Type",
+        "ui_element": "dropdown",
+        "options": ["Bullet", "Heading", "Paragraph", "Quote", "Code", "Other"],
+        "default_value": "Bullet"
+      },
+      {
+        "name": "namespaces",
+        "type": "list",
+        "display_name": "Namespaces",
+        "description": "List of namespaces",
+        "ui_element": "tags",
+        "default_value": []
+      }
+    ]
+  }
+}

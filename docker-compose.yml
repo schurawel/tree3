@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  researchguide:
+    build: .
+    image: researchguide-app:latest
+    volumes:
+      - .:/app
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ~/.Xauthority:/root/.Xauthority:ro # Mount Xauthority file
+      # Store persistent data in the containers directory
+      - ./containers/docker_data:/data 
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XAUTHORITY=/root/.Xauthority # Point to the mounted Xauthority file
+    network_mode: "host"  # Needed for X11 forwarding

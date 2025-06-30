@@ -1,0 +1,5 @@
+APP_NAME=ResearchGuide.Perseverance
+VERSION=B1.0.0
+BUILD_DATE=2025-05-20
+AUTHOR=Jason A. Schurawel
+DESCRIPTION=A tool for conducting and managing research projects

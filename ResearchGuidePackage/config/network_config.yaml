@@ -1,0 +1,12 @@
+# Network configuration for ResearchGuide application
+
+# Backend server configuration
+backend:
+  host: localhost
+  port: 5031
+  # URL will be constructed as http://{host}:{port}
+
+# Frontend configuration
+frontend:
+  # Leave empty for auto-detection
+  host: localhost
