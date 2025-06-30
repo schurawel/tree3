@@ -23,13 +23,11 @@ The documentation includes:
 ## Quick Start
 
 ```bash
+make dependencies
 # Build the application including documentation
 make build-only
-
-# Run the compiled application
-make run-only
 # Run raw Python application
-make run-python
+make run
 ```
 
 ## Development

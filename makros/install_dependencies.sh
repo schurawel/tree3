@@ -47,23 +47,39 @@ install_apt_packages() {
         
         # If that fails, try installing each package individually
         local failed_packages=()
+        local skipped_packages=()
         for package in "${package_list[@]}"; do
             echo -n "Installing $package... "
-            if apt-get install -y "$package" >/dev/null 2>&1; then
-                echo -e "${GREEN}OK${NC}"
+            # First check if package is available
+            if apt-cache show "$package" >/dev/null 2>&1; then
+                if apt-get install -y "$package" >/dev/null 2>&1; then
+                    echo -e "${GREEN}OK${NC}"
+                else
+                    echo -e "${RED}FAILED${NC}"
+                    failed_packages+=("$package")
+                fi
             else
-                echo -e "${RED}FAILED${NC}"
-                failed_packages+=("$package")
+                echo -e "${YELLOW}SKIPPED (not available)${NC}"
+                skipped_packages+=("$package")
             fi
         done
         
+        if [ ${#skipped_packages[@]} -gt 0 ]; then
+            echo -e "${YELLOW}The following packages were skipped (not available):${NC}"
+            for pkg in "${skipped_packages[@]}"; do
+                echo " - $pkg"
+            done
+        fi
+        
         if [ ${#failed_packages[@]} -gt 0 ]; then
-            echo -e "${RED}The following packages could not be installed:${NC}"
+            echo -e "${YELLOW}The following packages could not be installed but continuing:${NC}"
             for pkg in "${failed_packages[@]}"; do
                 echo " - $pkg"
             done
-            return 1
         fi
+        
+        # Don't exit with error, just continue
+        return 0
     fi
 }
 
@@ -218,7 +234,7 @@ if [ -f "${SCRIPT_DIR}/requirements.txt" ]; then
     QT_PACKAGES=("PyQt6" "PyQt6-Qt6" "PyQt6-WebEngine" "PyQt6-sip")
     for package in "${QT_PACKAGES[@]}"; do
         echo -n "Installing $package... "
-        if python3 -m pip install "$package"; then
+        if python3 -m pip install "$package" >/dev/null 2>&1; then
             echo -e "${GREEN}OK${NC}"
         else
             echo -e "${YELLOW}Failed but continuing${NC}"
@@ -227,13 +243,27 @@ if [ -f "${SCRIPT_DIR}/requirements.txt" ]; then
 
     # Install remaining requirements
     echo -e "${GREEN}Installing other Python dependencies...${NC}"
-    if python3 -m pip install -r "${SCRIPT_DIR}/requirements.txt"; then
+    if python3 -m pip install -r "${SCRIPT_DIR}/requirements.txt" >/dev/null 2>&1; then
         echo -e "${GREEN}✓ Python dependencies installed successfully${NC}"
     else
-        echo -e "${RED}Some Python dependencies failed to install${NC}"
+        echo -e "${YELLOW}Some Python dependencies failed to install, but continuing...${NC}"
+        # Try to install packages individually from requirements.txt
+        echo -e "${YELLOW}Attempting individual package installations...${NC}"
+        while IFS= read -r package || [ -n "$package" ]; do
+            # Skip empty lines and comments
+            if [[ -n "$package" && ! "$package" =~ ^[[:space:]]*# ]]; then
+                echo -n "Installing $package... "
+                if python3 -m pip install "$package" >/dev/null 2>&1; then
+                    echo -e "${GREEN}OK${NC}"
+                else
+                    echo -e "${YELLOW}SKIPPED${NC}"
+                fi
+            fi
+        done < "${SCRIPT_DIR}/requirements.txt"
     fi
 else
-    echo -e "${RED}requirements.txt not found at ${SCRIPT_DIR}/requirements.txt${NC}"
+    echo -e "${YELLOW}requirements.txt not found at ${SCRIPT_DIR}/requirements.txt${NC}"
+    echo -e "${YELLOW}Skipping Python package installation${NC}"
 fi
 
 # Final system setup
@@ -241,5 +271,7 @@ ldconfig
 echo -e "${GREEN}✓ System library cache updated${NC}"
 
 echo -e "${GREEN}===== Installation Complete =====${NC}"
+echo -e "${GREEN}Dependencies installation finished.${NC}"
+echo -e "${GREEN}Some packages may have been skipped if they were not available.${NC}"
 echo -e "${GREEN}You can now run the ResearchGuide application using:${NC}"
-echo -e "${YELLOW}bash run_python_app.sh${NC}"
+echo -e "${YELLOW}make run-only${NC}"

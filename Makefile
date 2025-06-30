@@ -19,7 +19,29 @@ TRIMMED_LAUNCHER := $(strip $(LAUNCHER))
 # Also trim whitespace from TESTRUNNER for consistency
 TRIMMED_TESTRUNNER := $(strip $(TESTRUNNER))
 
-.PHONY: all help Makefile clean run-docs-build compile-app run-only build-only build-and-run test
+.PHONY: all help Makefile clean run-docs-build compile-app run-only build-only build-and-run test dependencies run
+
+# Display help information about available targets
+help:
+	@echo "ResearchGuide Makefile - Available targets:"
+	@echo ""
+	@echo "  all              - Build the application and prompt to launch (default)"
+	@echo "  build-only       - Build the application without launching"
+	@echo "  build-and-run    - Build and immediately launch the application"
+	@echo "  run              - Run the application using Python (development mode)"
+	@echo "  run-only         - Launch the previously compiled application"
+	@echo "  dependencies     - Install system and Python dependencies"
+	@echo "  test             - Run all tests"
+	@echo "  html             - Build HTML documentation"
+	@echo "  clean            - Clean build artifacts"
+	@echo "  build-apptainer  - Build Apptainer container"
+	@echo "  help             - Show this help message"
+	@echo ""
+	@echo "Usage examples:"
+	@echo "  make dependencies  # Install dependencies first"
+	@echo "  make run          # Run in development mode"
+	@echo "  make all          # Build and optionally launch"
+	@echo "  make test         # Run tests"
 
 # Default target: builds and then asks the user if they want to launch.
 all: compile-app
@@ -85,6 +107,34 @@ test:
 		fi; \
 	else \
 		echo "ERROR: Test runner script $(TRIMMED_TESTRUNNER) not found."; \
+		echo "Please ensure this file is present in the makros directory."; \
+		exit 1; \
+	fi
+
+# Install system and Python dependencies
+dependencies:
+	@echo "---------------------------------------------------------------------"
+	@echo "Installing system and Python dependencies..."
+	@echo "---------------------------------------------------------------------"
+	@if [ -f "makros/install_dependencies.sh" ]; then \
+		chmod +x makros/install_dependencies.sh; \
+		sudo makros/install_dependencies.sh; \
+	else \
+		echo "ERROR: install_dependencies.sh script not found."; \
+		echo "Please ensure this file is present in the makros directory."; \
+		exit 1; \
+	fi
+
+# Run the application in development mode using Python
+run:
+	@echo "---------------------------------------------------------------------"
+	@echo "Running ResearchGuide in development mode..."
+	@echo "---------------------------------------------------------------------"
+	@if [ -f "makros/RunPython.sh" ]; then \
+		chmod +x makros/RunPython.sh; \
+		makros/RunPython.sh; \
+	else \
+		echo "ERROR: RunPython.sh script not found."; \
 		echo "Please ensure this file is present in the makros directory."; \
 		exit 1; \
 	fi

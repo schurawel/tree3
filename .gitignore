@@ -9,3 +9,4 @@ __pycache__/
 ResearchGuidePackage/FrontendModule/resources/Llama-3.2-1B-Instruct-f16.gguf
 dist/*
 .vscode/*
+source/generated/*
