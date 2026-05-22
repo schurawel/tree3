@@ -1,4 +1,4 @@
-![Arketa Logo](./arketa_logo.png)
+![Tree(3) Logo](./tree3_logo.png)
 # Doing. Science. Theory.
 
 Tree(3) (formerly ResearchGuide) is a research platform built around **TrigBiPy**, a novel theoretical approach to scientific methodology. This project is in active development and serves as a testbed for integrating human-machine collaboration in research workflows. And no, this is not an "AI" project. We are investigating different problems on the topic were Deep Learning could be a solution, but this is not the objective of this project. In fact this is basically the search for an Algorithm. The Algorithm of Thought itself. But we will explain that more detailed in future treatises.
