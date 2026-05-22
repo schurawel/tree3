@@ -21,4 +21,4 @@ make run
 
 ### License & Intellectual Property
 
-**Copyright (c) 2026 Jason A. Schurawel. All rights reserved.**
+This software is licensed under the GNU General Public License v3.0, allowing you to freely use, modify, and distribute the code provided that you maintain the same license terms.
