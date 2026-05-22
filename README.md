@@ -19,3 +19,6 @@ make build-only
 make run
 ```
 
+### License & Intellectual Property
+
+**Copyright (c) 2026 Jason A. Schurawel. All rights reserved.**
