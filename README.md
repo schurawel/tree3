@@ -1,24 +1,10 @@
-# ResearchGuideUnearth
+# ResearchGuide
 
-A toolkit for conducting and managing research projects.
+Is not another Notetaking-App. There is a lot to explain. Within the next few Months I am going to work a little bit on this project and share its story. Until then you are left with this impression. Currently the project is in a big refactoring phase and the provided sample is not usable for actual work. It is more a proof of concept.
 
 ## Overview
 
-ResearchGuideUnearth is designed to assist researchers with organizing, analyzing, and documenting their research projects through an intuitive interface.
-
-## Documentation
-
-Comprehensive documentation is available in two ways:
-
-1. **In the application**: Open ResearchGuideUnearth and navigate to the Documentation tab
-2. **In a web browser**: Open `build_docs/html/index.html` from the project directory
-
-The documentation includes:
-- Installation guide
-- Usage tutorials
-- API reference
-- Developer guides
-- License information
+ResearchGuide is a Software designed to use a newly developed Theory called "TrigBiPy". Further details are provided in the Future.
 
 ## Quick Start
 
@@ -29,11 +15,3 @@ make build-only
 # Run raw Python application
 make run
 ```
-
-## Development
-
-For development setup, contributing guidelines, and testing information, please refer to the developer section in the documentation.
-
-## License
-
-ResearchGuideUnearth is available under the MIT License. See the LICENSE.txt file or the license page in the documentation for more details.
